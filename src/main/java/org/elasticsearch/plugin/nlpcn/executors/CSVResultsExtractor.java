@@ -130,7 +130,15 @@ public class CSVResultsExtractor {
                     String realPath = parsePath(path.toString());
                     mapping.put(realPath , value.get("type"));
                     if (value.containsKey("fields")) {
-                        mapping.put(realPath + ".keyword", "keyword");
+                        if (((LinkedHashMap)value.get("fields")).containsKey("keyword")) {
+                            mapping.put(realPath + ".keyword", "keyword");
+                        }
+                    }
+                    if (value.containsKey("properties")) {
+                        LinkedHashMap _value = (LinkedHashMap) value.get("properties");
+                        for (Object _key : _value.keySet()) {
+                            mapping.put(realPath + "." + _key, ((LinkedHashMap) _value.get(_key)).get("type"));
+                        }
                     }
                     if (passed == children) {
                         if (path.size() - 2 >= 0) {//还要清理当前key的上层
