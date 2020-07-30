@@ -83,6 +83,7 @@ public class DefaultQueryAction extends QueryAction {
 		变量request是es搜索请求对象，调用的是es的api，SearchRequestBuilder是es的原生api
 		 */
         this.request = new SearchRequestBuilder(client, SearchAction.INSTANCE);
+        request.setTrackTotalHits(true);
 		setIndicesAndTypes();
 
 		//zhongshu-comment 将Select对象中封装的sql token信息转换并传到成员变量es搜索请求对象request中
